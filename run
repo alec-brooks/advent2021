@@ -1,1 +1,1 @@
-ghc -dynamic -o build/$1 $1.hs -odir build && ./build/$1
+ghc -dynamic -o build/$1 $1.hs -odir build && ./build/$1 && rm $1.hi
