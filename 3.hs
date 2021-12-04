@@ -1,6 +1,5 @@
 import Data.List
 import Data.Bool(bool)
-import Debug.Trace
 
 parseStringToBools :: String -> [Bool]
 parseStringToBools s = do 
