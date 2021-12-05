@@ -6,10 +6,7 @@ parseBoards lines = map (map words) $ splitOn [""] $ tail $ tail lines
 
 checkBoardIsWinner :: [String] -> [[String]] -> Bool
 checkBoardIsWinner [] _ = False
-checkBoardIsWinner draws board = any id (horizontalBingos ++ verticalBingos)
-    where horizontalBingos = map (all (`elem` draws)) board
-          verticalBingos = map (all (`elem` draws)) (transpose board)
-
+checkBoardIsWinner draws board = any id $ map (all (`elem` draws)) $ board ++ (transpose board)
 
 whenBoardWins :: [String] -> [[String]] -> Int
 whenBoardWins draws board = if checkBoardIsWinner draws board then
@@ -33,5 +30,4 @@ main = do
 
     print $ scoreBoard draws (fst winningBoard) (snd winningBoard)
     print $ scoreBoard draws (fst losingBoard) (snd losingBoard)
-
 
