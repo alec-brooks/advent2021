@@ -29,10 +29,10 @@ commonNumber c = (> quot (length c) 2) . sum . map fromEnum $ c
 
 maybeCommonNumber :: [Bool] -> Maybe Bool
 maybeCommonNumber c = do
-    let halfway = quot (length c) 2 + (bool 0 1 (mod (length c) 2 == 1))
+    let halfway = quot (length c) 2 + bool 0 1 (mod (length c) 2 == 1)
     let oneCount = sum . map fromEnum $ c
-    let result | (oneCount > halfway) = Just True
-               | (oneCount < halfway) = Just False
+    let result | oneCount > halfway = Just True
+               | oneCount < halfway = Just False
                | otherwise = Nothing
     result
 
@@ -43,6 +43,6 @@ main = do
 
     let gamma = map commonNumber columns
     let epsilon = map not gamma
-    print $ (bintodec gamma) * (bintodec epsilon)
-    print $ (bintodec $ rating (oxFilter) 0 linesOfFile) * (bintodec $ rating (co2Filter) 0 linesOfFile)
+    print $ bintodec gamma * bintodec epsilon
+    print $ bintodec (rating oxFilter 0 linesOfFile) * bintodec (rating co2Filter 0 linesOfFile)
 

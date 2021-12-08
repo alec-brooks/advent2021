@@ -13,8 +13,8 @@ range' a b = if a > b then [b..a] else [a..b]
 
 range2 :: [(Int, Int)] -> [(Int, Int)]
 range2 [(x1,y1),(x2,y2)]
-    | x1 == x2           = zip (cycle [x1]) (range' y1 y2)
-    | y1 == y2           = zip (range' x1 x2) (cycle [y1])
+    | x1 == x2           = zip (repeat x1) (range' y1 y2)
+    | y1 == y2           = zip (range' x1 x2) (repeat y1)
     | x1 < x2 && y1 < y2 = zip [x1..x2] [y1..y2]
     | x1 > x2 && y1 < y2 = zip (reverse [x2..x1]) [y1..y2]
     | x1 > x2 && y1 > y2 = zip (reverse [x2..x1]) (reverse [y2..y1])
@@ -24,12 +24,12 @@ tuplify :: [Int] -> (Int,Int)
 tuplify [a,b] = (a,b)
 
 nOverlaps :: [[(Int,Int)]] -> Int
-nOverlaps lines = length . Map.filter (> 1) . foldl countLines Map.empty . concat $ map range2 lines
+nOverlaps lines = length . Map.filter (> 1) . foldl countLines Map.empty . concatMap range2 lines
 
 main = do
     content <- readFile "5.txt"
     let linesOfFile = lines content
-    let linesCoords = map (map (tuplify. (map read) . splitOn ",") .  splitOn " -> ") linesOfFile 
+    let linesCoords = map (map (tuplify. map read . splitOn ",") .  splitOn " -> ") linesOfFile
     let part1Lines = filter horVerticalFilter linesCoords
 
     print $ nOverlaps part1Lines

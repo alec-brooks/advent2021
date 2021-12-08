@@ -29,8 +29,8 @@ main = do
     let commands = map parseLine $ lines content
 
     let newPosition = positionFromCommands Pos{depth=0,hPos=0,aim=0} commands
-    print $ (hPos newPosition) * (depth newPosition)
+    print $ hPos newPosition * depth newPosition
 
     let newPos= posWithAim Pos{depth=0,hPos=0,aim=0} commands
-    print $ (hPos newPos) * (depth newPos)
+    print $ hPos newPos * depth newPos
 
